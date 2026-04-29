@@ -6,7 +6,7 @@
 <title>1st & 10 Barber Shop</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Barlow+Condensed:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700;800&family=Anton&display=swap" rel="stylesheet">
 <style>
   :root {
     --field-green: #1a6b2a;
@@ -1051,6 +1051,432 @@ function switchTab(btn, target) {
 }
 </script>
 
+<!-- ===== PRO REDESIGN OVERRIDE LAYER ===== -->
+<style>
+  :root {
+    --gold: #d4af37;
+    --gold-bright: #f4cf57;
+    --ink: #050a06;
+    --bone: #f5f0e8;
+    --turf: #1a6b2a;
+    --turf-deep: #0a2010;
+    --signal: #d95f2b;
+  }
+
+  /* Tighter type rhythm */
+  body { font-family: 'Inter', 'Barlow Condensed', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .hero h1 {
+    font-family: 'Anton', 'Bebas Neue', Impact, sans-serif !important;
+    letter-spacing: -2px !important;
+    font-weight: 400;
+    line-height: 0.85 !important;
+  }
+  .hero h1 span {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-style: italic; font-weight: 900;
+    color: var(--gold) !important;
+    letter-spacing: -4px;
+  }
+  .hero-eyebrow {
+    color: var(--gold) !important;
+    position: relative;
+    display: inline-flex !important; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; width: 32px; height: 1px; background: var(--gold); opacity: .6;
+  }
+  .section-title { letter-spacing: -1px !important; }
+  .section-label {
+    color: var(--gold) !important;
+    display: inline-flex !important; align-items: center; gap: 10px;
+  }
+  .section-label::before {
+    content: ''; width: 24px; height: 2px; background: var(--gold);
+  }
+
+  /* Editorial section number tags */
+  .pro-section-num {
+    position: absolute; top: 20px; right: 24px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-weight: 400;
+    font-size: 14px; letter-spacing: 4px;
+    color: rgba(212,175,55,0.55); text-transform: uppercase;
+    z-index: 3;
+  }
+  .pro-section-num span { color: var(--gold); font-weight: 700; }
+
+  /* Refined buttons with magnetic feel */
+  .btn {
+    transition: transform .35s cubic-bezier(.2,.9,.3,1.4), background .25s, box-shadow .25s;
+    position: relative; overflow: hidden;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--signal) 0%, #b94a1f 100%) !important;
+    box-shadow: 0 6px 22px rgba(217,95,43,.35), inset 0 1px 0 rgba(255,255,255,.18);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 14px 38px rgba(217,95,43,.55), inset 0 1px 0 rgba(255,255,255,.25);
+  }
+  .btn::before {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(110deg, transparent 35%, rgba(255,255,255,.22) 50%, transparent 65%);
+    transform: translateX(-100%);
+    transition: transform .65s cubic-bezier(.2,.9,.3,1.1);
+  }
+  .btn:hover::before { transform: translateX(100%); }
+
+  /* Dimensional barber cards (override clip-path with rounded edge accent) */
+  .barber-card {
+    background: linear-gradient(165deg, rgba(26,107,42,.18) 0%, rgba(8,31,12,.85) 100%) !important;
+    border: 1px solid rgba(212,175,55,.12) !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 18px 40px -20px rgba(0,0,0,.7);
+    transition: transform .4s cubic-bezier(.2,.9,.3,1.1), box-shadow .4s, border-color .4s !important;
+  }
+  .barber-card:hover {
+    border-color: rgba(212,175,55,.45) !important;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,.8), 0 0 0 1px rgba(212,175,55,.4) !important;
+  }
+  .card-num {
+    font-family: 'Playfair Display', serif !important;
+    font-style: italic;
+    font-size: 80px !important;
+    font-weight: 900;
+    color: rgba(212,175,55,0.06) !important;
+  }
+  .barber-card:hover .card-num { color: rgba(212,175,55,0.18) !important; transition: color .4s; }
+  .barber-pos { color: var(--gold) !important; }
+  .book-btn {
+    background: transparent !important;
+    color: var(--bone) !important;
+    border: 1px solid rgba(212,175,55,.4) !important;
+    clip-path: none !important;
+    border-radius: 0;
+    transition: all .3s cubic-bezier(.2,.9,.3,1.1) !important;
+    position: relative;
+  }
+  .book-btn::after {
+    content:'→'; margin-left: 8px; display: inline-block;
+    transition: transform .3s ease;
+  }
+  .book-btn:hover {
+    background: var(--gold) !important;
+    color: var(--ink) !important;
+    border-color: var(--gold) !important;
+    transform: scale(1.02);
+  }
+  .book-btn:hover::after { transform: translateX(4px); }
+
+  /* Tab refinement */
+  .tab {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+    letter-spacing: 2px !important;
+    transition: all .25s ease;
+  }
+  .tab.active {
+    color: var(--gold) !important;
+    border-bottom-color: var(--gold) !important;
+    background: linear-gradient(180deg, transparent, rgba(212,175,55,.08)) !important;
+  }
+
+  /* Ticker upgrade */
+  .ticker-wrap {
+    background: linear-gradient(90deg, var(--ink), #1a0a04 50%, var(--ink)) !important;
+    border-top: 1px solid rgba(212,175,55,.25);
+    border-bottom: 1px solid rgba(212,175,55,.25);
+  }
+  .ticker span { color: var(--gold) !important; font-weight: 400; }
+  .ticker span::after { content: '' !important; }
+  .ticker span + span::before {
+    content: '✦'; color: var(--signal); margin-right: 36px; font-size: 12px;
+  }
+
+  /* Refined yard divider */
+  .yard-divider {
+    background: linear-gradient(90deg, var(--ink) 0%, var(--signal) 30%, var(--signal) 70%, var(--ink) 100%) !important;
+  }
+
+  /* Hero polish */
+  .hero {
+    background: radial-gradient(ellipse at 50% 100%, #143b1d 0%, #050f06 60%, #020806 100%) !important;
+  }
+  .hero-overlay {
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(212,175,55,.08) 0%, transparent 50%),
+      linear-gradient(180deg, rgba(4,15,6,.4) 0%, transparent 30%, rgba(2,8,6,.7) 100%) !important;
+  }
+
+  /* Stat strip */
+  .pro-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    background: linear-gradient(180deg, rgba(212,175,55,.06), transparent);
+    border-top: 1px solid rgba(212,175,55,.18);
+    border-bottom: 1px solid rgba(212,175,55,.18);
+    position: relative; z-index: 5;
+  }
+  .pro-stat {
+    padding: 28px 20px;
+    text-align: center;
+    border-right: 1px solid rgba(212,175,55,.1);
+    position: relative;
+  }
+  .pro-stat:last-child { border-right: none; }
+  .pro-stat .num {
+    font-family: 'Anton', Impact, sans-serif;
+    font-size: clamp(40px, 5vw, 64px);
+    line-height: 1;
+    color: var(--bone);
+    letter-spacing: -1px;
+    display: block;
+  }
+  .pro-stat .num em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-weight: 700;
+    color: var(--gold);
+  }
+  .pro-stat .lbl {
+    margin-top: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(245,240,232,.55);
+  }
+  @media (max-width: 768px) {
+    .pro-stats { grid-template-columns: repeat(2, 1fr); }
+    .pro-stat:nth-child(2) { border-right: none; }
+    .pro-stat:nth-child(1), .pro-stat:nth-child(2) { border-bottom: 1px solid rgba(212,175,55,.1); }
+  }
+
+  /* Stadium silhouette */
+  .stadium-skyline {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 140px; pointer-events: none; z-index: 1;
+    opacity: .35;
+    filter: drop-shadow(0 -4px 20px rgba(0,0,0,.7));
+  }
+  .stadium-skyline svg { display: block; width: 100%; height: 100%; }
+
+  /* Floating helmet 3D */
+  .pro-helmet {
+    position: absolute; pointer-events: none;
+    filter: drop-shadow(0 24px 32px rgba(0,0,0,.7));
+    transform-style: preserve-3d;
+    animation: helmetFloat 7s ease-in-out infinite, helmetRotate 14s linear infinite;
+  }
+  @keyframes helmetFloat {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-18px); }
+  }
+  @keyframes helmetRotate {
+    0%   { filter: drop-shadow(0 24px 32px rgba(0,0,0,.7)) hue-rotate(0deg); }
+    50%  { filter: drop-shadow(0 24px 32px rgba(217,95,43,.5)) hue-rotate(8deg); }
+    100% { filter: drop-shadow(0 24px 32px rgba(0,0,0,.7)) hue-rotate(0deg); }
+  }
+
+  /* Trophy element */
+  .pro-trophy {
+    display: inline-block; position: relative;
+    animation: trophyShine 4s ease-in-out infinite;
+    filter: drop-shadow(0 8px 20px rgba(212,175,55,.3));
+  }
+  @keyframes trophyShine {
+    0%,100% { filter: drop-shadow(0 8px 20px rgba(212,175,55,.3)); }
+    50%      { filter: drop-shadow(0 12px 30px rgba(212,175,55,.65)); }
+  }
+
+  /* Penalty flag */
+  .penalty-flag {
+    position: absolute; pointer-events: none;
+    animation: flagFlap 1.5s ease-in-out infinite;
+    transform-origin: top left;
+  }
+  @keyframes flagFlap {
+    0%,100% { transform: rotate(-2deg) skewX(-2deg); }
+    50%      { transform: rotate(2deg)  skewX(2deg); }
+  }
+
+  /* Scoreboard strip */
+  .pro-scoreboard {
+    background: #050a06;
+    border-bottom: 1px solid rgba(212,175,55,.25);
+    padding: 6px 24px;
+    display: flex; align-items: center; gap: 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(245,240,232,.7);
+    overflow: hidden;
+    position: relative; z-index: 11;
+  }
+  .pro-scoreboard .live-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #ff3b30; box-shadow: 0 0 10px #ff3b30;
+    animation: livePulse 1.4s ease-in-out infinite;
+  }
+  @keyframes livePulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: .55; transform: scale(.85); }
+  }
+  .pro-scoreboard .sb-item { display: flex; align-items: center; gap: 8px; }
+  .pro-scoreboard .sb-item strong { color: var(--gold); font-weight: 700; }
+  .pro-scoreboard .sb-divider {
+    width: 1px; height: 14px; background: rgba(212,175,55,.25);
+  }
+  @media (max-width: 768px) {
+    .pro-scoreboard { font-size: 10px; gap: 12px; padding: 6px 14px; }
+    .pro-scoreboard .sb-item:nth-child(n+5) { display: none; }
+  }
+
+  /* Header upgrade with gold accent */
+  header {
+    background: rgba(4,12,7,.92) !important;
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(212,175,55,.25) !important;
+  }
+  nav a {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    letter-spacing: 2.5px !important;
+  }
+  nav a::after { background: var(--gold) !important; }
+  nav a:hover { color: var(--gold) !important; }
+
+  /* Header CTA button */
+  .nav-cta {
+    background: var(--gold) !important; color: var(--ink) !important;
+    padding: 9px 20px !important;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: all .25s ease !important;
+  }
+  .nav-cta::after { display: none; }
+  .nav-cta:hover {
+    background: var(--gold-bright) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(212,175,55,.4);
+  }
+
+  /* Playbook X & O background */
+  .playbook-bg {
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    opacity: .04;
+    background-image:
+      radial-gradient(circle at 15% 20%, var(--bone) 6px, transparent 7px),
+      radial-gradient(circle at 35% 60%, var(--bone) 6px, transparent 7px),
+      radial-gradient(circle at 75% 30%, var(--bone) 6px, transparent 7px),
+      radial-gradient(circle at 85% 80%, var(--bone) 6px, transparent 7px),
+      linear-gradient(45deg, transparent 48%, var(--bone) 48%, var(--bone) 52%, transparent 52%) 25% 70% / 60px 60px no-repeat,
+      linear-gradient(-45deg, transparent 48%, var(--bone) 48%, var(--bone) 52%, transparent 52%) 25% 70% / 60px 60px no-repeat;
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+  }
+
+  /* Footer refinement */
+  footer {
+    background: linear-gradient(180deg, var(--ink), #000) !important;
+    border-top: 1px solid rgba(212,175,55,.3) !important;
+  }
+  .footer-links a:hover { color: var(--gold) !important; }
+
+  /* Info card refinement */
+  .info-card {
+    background: linear-gradient(165deg, rgba(26,107,42,.12) 0%, rgba(8,31,12,.6) 100%) !important;
+    border: 1px solid rgba(212,175,55,.15) !important;
+    transition: transform .35s cubic-bezier(.2,.9,.3,1.1), border-color .35s, box-shadow .35s;
+  }
+  .info-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212,175,55,.4) !important;
+    box-shadow: 0 24px 50px -20px rgba(0,0,0,.7);
+  }
+  .info-card h3 { color: var(--gold) !important; }
+  .info-card a { color: var(--gold) !important; }
+
+  /* Gallery refinement */
+  .gallery-grid img {
+    border-radius: 0;
+    filter: saturate(.85) contrast(1.05) !important;
+    transition: filter .5s ease, transform .5s cubic-bezier(.2,.9,.3,1.1) !important;
+  }
+  .gallery-grid img:hover {
+    filter: saturate(1.2) contrast(1.1) !important;
+    transform: scale(1.04) !important;
+  }
+
+  /* Cloudinary thumbs refined */
+  #pgrid img {
+    transition: transform .5s cubic-bezier(.2,.9,.3,1.1), filter .4s !important;
+    filter: saturate(.9);
+  }
+  #pgrid img:hover { filter: saturate(1.15) brightness(1.05); }
+
+  /* Scroll progress bar */
+  .pro-scroll-progress {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 2px; z-index: 10000;
+    background: transparent;
+    pointer-events: none;
+  }
+  .pro-scroll-progress > div {
+    height: 100%;
+    background: linear-gradient(90deg, var(--signal), var(--gold));
+    width: 0%;
+    transition: width .15s ease-out;
+    box-shadow: 0 0 12px rgba(212,175,55,.5);
+  }
+
+  /* Magnetic affordance */
+  .magnetic { transition: transform .25s cubic-bezier(.2,.9,.3,1.4); }
+
+  /* Spring-in for cards on hover (extra layer) */
+  .barber-card .card-body {
+    position: relative; z-index: 2;
+    transition: transform .4s cubic-bezier(.2,.9,.3,1.1);
+  }
+  .barber-card:hover .card-body { transform: translateY(-2px); }
+
+  /* Section break markers (editorial) */
+  .pro-break {
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+    padding: 50px 20px;
+    position: relative;
+  }
+  .pro-break::before, .pro-break::after {
+    content:''; flex: 1; max-width: 220px;
+    height: 1px; background: linear-gradient(90deg, transparent, rgba(212,175,55,.4), transparent);
+  }
+  .pro-break .pb-icon {
+    width: 28px; height: 28px;
+    border: 1px solid var(--gold); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold);
+    transform: rotate(45deg);
+    background: rgba(212,175,55,.05);
+  }
+  .pro-break .pb-icon span { transform: rotate(-45deg); font-size: 12px; }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+  }
+
+  /* Hero tighter on mobile */
+  @media (max-width: 768px) {
+    .pro-section-num { font-size: 11px; top: 12px; right: 14px; }
+    .stadium-skyline { height: 70px; opacity: .25; }
+    .pro-helmet { display: none !important; }
+    nav { display: none; }
+  }
+
+  /* Hide nav on small screens BUT keep CTA */
+  @media (max-width: 900px) and (min-width: 769px) {
+    nav a:not(.nav-cta) { display: none; }
+  }
+</style>
+
 <!-- ===== FOOTBALL 3D EXTRAS JS ===== -->
 <script>
 (function(){
@@ -1165,6 +1591,241 @@ function switchTab(btn, target) {
 
   /* --- Scoreboard-style ticker enhancement: add a football between every item --- */
   /* Already handled by CSS ::after { content:'🏈' } */
+
+  /* ============================================================
+     PRO REDESIGN: editorial transformation
+     ============================================================ */
+
+  /* --- Scroll progress bar --- */
+  var sp = document.createElement('div');
+  sp.className = 'pro-scroll-progress';
+  sp.innerHTML = '<div></div>';
+  document.body.appendChild(sp);
+  var spBar = sp.firstChild;
+  function updateScrollProgress() {
+    var h = document.documentElement;
+    var pct = (h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight)) * 100;
+    spBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+  updateScrollProgress();
+
+  /* --- Top scoreboard strip (above header) --- */
+  var sb = document.createElement('div');
+  sb.className = 'pro-scoreboard';
+  sb.innerHTML =
+    '<div class="sb-item"><span class="live-dot"></span><strong>NOW SERVING</strong></div>' +
+    '<div class="sb-divider"></div>' +
+    '<div class="sb-item">EST <strong>2018</strong></div>' +
+    '<div class="sb-divider"></div>' +
+    '<div class="sb-item"><strong>2</strong> LOCATIONS</div>' +
+    '<div class="sb-divider"></div>' +
+    '<div class="sb-item"><strong>10</strong> BARBERS</div>' +
+    '<div class="sb-divider"></div>' +
+    '<div class="sb-item">CYPRESS · RICHMOND, <strong>TX</strong></div>' +
+    '<div class="sb-divider"></div>' +
+    '<div class="sb-item">RATING <strong>★ 4.9</strong></div>';
+  document.body.insertBefore(sb, document.body.firstChild);
+
+  /* --- Add nav CTA button --- */
+  var navEl = document.querySelector('header nav');
+  if (navEl) {
+    var lastLink = navEl.querySelector('a:last-child');
+    var cta = document.createElement('a');
+    cta.href = '#book';
+    cta.className = 'nav-cta';
+    cta.textContent = 'BOOK NOW';
+    navEl.appendChild(cta);
+  }
+
+  /* --- Stat strip below ticker --- */
+  var ticker = document.querySelector('.ticker-wrap');
+  if (ticker) {
+    var stats = document.createElement('div');
+    stats.className = 'pro-stats fb-reveal';
+    stats.innerHTML =
+      '<div class="pro-stat"><span class="num">10</span><div class="lbl">Master Barbers</div></div>' +
+      '<div class="pro-stat"><span class="num">2</span><div class="lbl">Locations</div></div>' +
+      '<div class="pro-stat"><span class="num"><em>4.9</em></span><div class="lbl">Average Rating</div></div>' +
+      '<div class="pro-stat"><span class="num">7+</span><div class="lbl">Years On The Field</div></div>';
+    ticker.parentNode.insertBefore(stats, ticker.nextSibling);
+    if ('IntersectionObserver' in window) {
+      var io3 = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('vis'); io3.unobserve(e.target); } }); });
+      io3.observe(stats);
+    } else { stats.classList.add('vis'); }
+  }
+
+  /* --- Stadium skyline silhouette in hero --- */
+  var heroSec = document.querySelector('.hero');
+  if (heroSec) {
+    var skyline = document.createElement('div');
+    skyline.className = 'stadium-skyline';
+    skyline.innerHTML =
+      '<svg viewBox="0 0 1200 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">' +
+        '<defs>' +
+          '<linearGradient id="skyfade" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0%" stop-color="#0a2010" stop-opacity="0"/>' +
+            '<stop offset="100%" stop-color="#020806" stop-opacity="1"/>' +
+          '</linearGradient>' +
+        '</defs>' +
+        /* Stadium rim shape */
+        '<path d="M0,140 L0,90 L40,80 L60,72 L80,68 L120,64 L160,60 L200,55 L240,52 L280,50 L320,48 L360,46 L400,44 L440,42 L480,40 L520,40 L560,38 L600,38 L640,38 L680,38 L720,40 L760,42 L800,44 L840,46 L880,48 L920,50 L960,52 L1000,55 L1040,60 L1080,64 L1120,68 L1140,72 L1160,80 L1200,90 L1200,140 Z" fill="#020806"/>' +
+        /* Stadium light poles */
+        '<g fill="#1a3322" opacity=".9">' +
+          '<rect x="120" y="30" width="3" height="40"/><rect x="100" y="25" width="50" height="6" rx="1"/>' +
+          '<rect x="320" y="22" width="3" height="35"/><rect x="300" y="17" width="50" height="6" rx="1"/>' +
+          '<rect x="540" y="18" width="3" height="30"/><rect x="520" y="13" width="50" height="6" rx="1"/>' +
+          '<rect x="760" y="20" width="3" height="32"/><rect x="740" y="15" width="50" height="6" rx="1"/>' +
+          '<rect x="980" y="24" width="3" height="36"/><rect x="960" y="19" width="50" height="6" rx="1"/>' +
+        '</g>' +
+        /* Stadium light glows */
+        '<g fill="#fff5b3" opacity=".6">' +
+          '<circle cx="125" cy="28" r="3"/><circle cx="325" cy="20" r="3"/><circle cx="545" cy="16" r="3"/><circle cx="765" cy="18" r="3"/><circle cx="985" cy="22" r="3"/>' +
+        '</g>' +
+        '<rect x="0" y="0" width="1200" height="140" fill="url(#skyfade)"/>' +
+      '</svg>';
+    heroSec.appendChild(skyline);
+
+    /* Insert 3D helmet on hero (top-right area) */
+    var helmet = document.createElement('div');
+    helmet.className = 'pro-helmet';
+    helmet.style.cssText = 'top:16%; right:6%; width:140px; z-index:2;';
+    helmet.innerHTML =
+      '<svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">' +
+        '<defs>' +
+          '<linearGradient id="hg1" x1="0" y1="0" x2="1" y2="1">' +
+            '<stop offset="0%" stop-color="#1a6b2a"/><stop offset="50%" stop-color="#0a3d18"/><stop offset="100%" stop-color="#020806"/>' +
+          '</linearGradient>' +
+          '<linearGradient id="hg2" x1="0" y1="0" x2="1" y2="0">' +
+            '<stop offset="0%" stop-color="#d95f2b"/><stop offset="50%" stop-color="#f4cf57"/><stop offset="100%" stop-color="#d95f2b"/>' +
+          '</linearGradient>' +
+          '<radialGradient id="hg3" cx=".3" cy=".3"><stop offset="0%" stop-color="#fff" stop-opacity=".4"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></radialGradient>' +
+        '</defs>' +
+        /* helmet shell */
+        '<path d="M30,90 Q30,30 100,28 Q170,28 175,85 Q175,120 165,135 L150,135 Q145,118 130,118 L100,118 Q88,118 82,128 L70,140 Q40,135 30,90 Z" fill="url(#hg1)" stroke="#020806" stroke-width="2"/>' +
+        /* center stripe */
+        '<path d="M100,28 Q104,80 100,118" stroke="url(#hg2)" stroke-width="6" fill="none"/>' +
+        /* face mask */
+        '<g stroke="#d4af37" stroke-width="2.5" fill="none" stroke-linecap="round">' +
+          '<path d="M82,128 Q80,138 88,144 L150,144 Q160,140 158,130"/>' +
+          '<path d="M82,138 L160,138"/>' +
+          '<path d="M95,128 L95,148 M115,128 L115,148 M135,128 L135,148"/>' +
+        '</g>' +
+        /* shine */
+        '<ellipse cx="80" cy="60" rx="35" ry="20" fill="url(#hg3)"/>' +
+        /* ear hole */
+        '<circle cx="55" cy="100" r="8" fill="#020806" stroke="#d4af37" stroke-width="1.5"/>' +
+        '<circle cx="55" cy="100" r="3" fill="#d4af37" opacity=".4"/>' +
+      '</svg>';
+    heroSec.appendChild(helmet);
+
+    /* Section number tag for hero */
+    var heroNum = document.createElement('div');
+    heroNum.className = 'pro-section-num';
+    heroNum.innerHTML = 'Chapter <span>01</span>';
+    heroSec.appendChild(heroNum);
+  }
+
+  /* --- Editorial section number tags --- */
+  var sectionMap = [
+    { id: 'gallery',   num: '02', label: 'The Field' },
+    { id: 'book',      num: '03', label: 'Roster'    },
+    { id: 'photos',    num: '04', label: 'Highlights' },
+    { id: 'about',     num: '05', label: 'Origin'    },
+    { id: 'locations', num: '06', label: 'Stadiums'  }
+  ];
+  sectionMap.forEach(function(s){
+    var el = document.getElementById(s.id);
+    if (el) {
+      el.style.position = 'relative';
+      var tag = document.createElement('div');
+      tag.className = 'pro-section-num';
+      tag.innerHTML = s.label + ' <span>· ' + s.num + '</span>';
+      el.appendChild(tag);
+    }
+  });
+
+  /* --- Penalty flag accent in booking section --- */
+  var bookSec = document.getElementById('book');
+  if (bookSec) {
+    var flag = document.createElement('div');
+    flag.className = 'penalty-flag';
+    flag.style.cssText = 'top:14%; right:6%; width:36px; z-index:2;';
+    flag.innerHTML =
+      '<svg viewBox="0 0 50 70" xmlns="http://www.w3.org/2000/svg">' +
+        '<line x1="6" y1="0" x2="6" y2="70" stroke="#3a2a14" stroke-width="2.5"/>' +
+        '<path d="M6,8 L40,18 L36,32 L6,24 Z" fill="#f4cf57" stroke="#b88a14" stroke-width="1"/>' +
+        '<circle cx="6" cy="68" r="4" fill="#b88a14"/>' +
+      '</svg>';
+    bookSec.appendChild(flag);
+  }
+
+  /* --- Trophy in about section --- */
+  var aboutSec = document.getElementById('about');
+  if (aboutSec) {
+    var firstWrap = aboutSec.querySelector('.section-wrap');
+    if (firstWrap) {
+      var trophyBadge = document.createElement('div');
+      trophyBadge.style.cssText = 'display:inline-flex; align-items:center; gap:14px; margin-bottom:18px; padding:10px 18px; background:rgba(212,175,55,.06); border:1px solid rgba(212,175,55,.25); border-radius:2px;';
+      trophyBadge.innerHTML =
+        '<div class="pro-trophy" style="width:28px; height:32px;">' +
+          '<svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">' +
+            '<defs>' +
+              '<linearGradient id="trg1" x1="0" y1="0" x2="0" y2="1">' +
+                '<stop offset="0%" stop-color="#f4cf57"/><stop offset="50%" stop-color="#d4af37"/><stop offset="100%" stop-color="#9c7a1f"/>' +
+              '</linearGradient>' +
+            '</defs>' +
+            '<path d="M15,8 L45,8 L43,30 Q43,42 30,42 Q17,42 17,30 Z" fill="url(#trg1)" stroke="#7a5e15" stroke-width="1"/>' +
+            '<path d="M15,12 Q4,14 6,28 Q8,38 18,36" fill="none" stroke="url(#trg1)" stroke-width="3"/>' +
+            '<path d="M45,12 Q56,14 54,28 Q52,38 42,36" fill="none" stroke="url(#trg1)" stroke-width="3"/>' +
+            '<rect x="22" y="42" width="16" height="6" fill="#9c7a1f"/>' +
+            '<rect x="16" y="48" width="28" height="6" fill="url(#trg1)" stroke="#7a5e15" stroke-width=".5"/>' +
+            '<rect x="12" y="54" width="36" height="10" fill="#9c7a1f" stroke="#7a5e15" stroke-width=".5"/>' +
+          '</svg>' +
+        '</div>' +
+        '<span style="font-family:\'Playfair Display\',serif; font-style:italic; font-size:13px; letter-spacing:1px; color:#d4af37;">Hometown Champions · Cypress &amp; Richmond</span>';
+      firstWrap.insertBefore(trophyBadge, firstWrap.firstChild);
+    }
+  }
+
+  /* --- Magnetic buttons --- */
+  document.querySelectorAll('.btn, .nav-cta, .book-btn').forEach(function(b){
+    b.classList.add('magnetic');
+    b.addEventListener('mousemove', function(e){
+      var r = b.getBoundingClientRect();
+      var x = e.clientX - r.left - r.width/2;
+      var y = e.clientY - r.top  - r.height/2;
+      b.style.transform = 'translate(' + (x*0.18) + 'px,' + (y*0.25) + 'px)';
+    });
+    b.addEventListener('mouseleave', function(){ b.style.transform = ''; });
+  });
+
+  /* --- Scroll-driven parallax for hero floating elements --- */
+  var heroFloats = document.querySelectorAll('.hero .float-fb, .hero .yd-ghost, .hero .pro-helmet, .hero .gp-wrap, .hero .stadium-skyline');
+  var heroH = heroSec ? heroSec.offsetHeight : 0;
+  function heroParallax() {
+    var y = window.scrollY;
+    if (y > heroH) return;
+    heroFloats.forEach(function(el, i){
+      var depth = (i % 4 + 1) * 0.08;
+      el.style.translate = '0 ' + (y * depth) + 'px';
+    });
+  }
+  window.addEventListener('scroll', heroParallax, { passive: true });
+
+  /* --- Hover-lift on info cards (tilt) --- */
+  document.querySelectorAll('.info-card').forEach(function(card){
+    card.addEventListener('mousemove', function(e){
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width  - 0.5;
+      var y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transform = 'perspective(800px) rotateY(' + (x*5) + 'deg) rotateX(' + (-y*5) + 'deg) translateY(-4px)';
+    });
+    card.addEventListener('mouseleave', function(){ card.style.transform = ''; });
+  });
+
+  /* --- Editorial section break dividers (insert between major sections) --- */
+  /* Skipped here — yard-divider already serves this role and was upgraded via CSS */
 
 })();
 </script>
