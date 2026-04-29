@@ -458,165 +458,133 @@
 <!-- CLOUDINARY GALLERY -->
 <div id="photos" style="background:#060f07; border-top:1px solid rgba(255,255,255,0.06); position:relative; z-index:5;">
   <div class="section-wrap">
-    <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:0;">
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:36px;">
       <div>
         <div class="section-label">Fresh Cuts · Real Clients</div>
         <div class="section-title" style="margin-bottom:0;">THE GALLERY</div>
       </div>
-      <button onclick="toggleUpload()" style="margin-top:12px; font-family:'Oswald',Impact,sans-serif; font-weight:700; font-size:12px; letter-spacing:3px; text-transform:uppercase; padding:10px 22px; background:rgba(217,95,43,0.15); color:#d95f2b; border:1px solid rgba(217,95,43,0.4); cursor:pointer; clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%); transition:all 0.2s;" onmouseover="this.style.background='rgba(217,95,43,0.3)'" onmouseout="this.style.background='rgba(217,95,43,0.15)'">+ ADD PHOTOS</button>
-    </div>
-    <div style="margin-bottom:36px;"></div>
-
-    <!-- Upload toggle (hidden by default — double-click title to reveal) -->
-    <div id="upload-zone" style="display:none; border:2px dashed rgba(217,95,43,0.5); padding:32px; text-align:center; margin-bottom:36px; clip-path:polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px)); background:rgba(217,95,43,0.05); cursor:pointer; transition:background 0.2s;" onclick="document.getElementById('gallery-file-input').click()" ondragover="event.preventDefault(); this.style.background='rgba(217,95,43,0.12)'" ondragleave="this.style.background='rgba(217,95,43,0.05)'" ondrop="handleDrop(event)">
-      <div style="font-size:40px; margin-bottom:10px;">📸</div>
-      <div style="font-family:'Bebas Neue',Impact,sans-serif; font-size:28px; letter-spacing:3px; color:#f5f0e8; margin-bottom:6px;">DROP ALL PHOTOS HERE</div>
-      <div style="font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:2px; color:rgba(255,255,255,0.35); text-transform:uppercase;">or click to select all 133 at once</div>
-      <input id="gallery-file-input" type="file" multiple accept="image/*" style="display:none" onchange="uploadFiles(this.files)">
+      <label for="gfile" style="margin-top:14px; font-family:Oswald,Impact,sans-serif; font-weight:700; font-size:12px; letter-spacing:3px; text-transform:uppercase; padding:11px 24px; background:rgba(217,95,43,0.15); color:#d95f2b; border:1px solid rgba(217,95,43,0.4); cursor:pointer; clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%); display:inline-block; transition:background 0.2s;">+ ADD PHOTOS</label>
+      <input id="gfile" type="file" multiple accept="image/*" style="display:none">
     </div>
 
-    <!-- Progress -->
-    <div id="upload-progress" style="display:none; margin-bottom:28px;">
+    <!-- Progress bar -->
+    <div id="gprog-wrap" style="display:none; margin-bottom:24px;">
       <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-        <span style="font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:2px; color:#d95f2b; text-transform:uppercase;" id="progress-label">Uploading...</span>
-        <span style="font-family:'Oswald',sans-serif; font-size:13px; color:rgba(255,255,255,0.5);" id="progress-count">0 / 0</span>
+        <span id="gprog-label" style="font-family:Oswald,sans-serif; font-size:13px; letter-spacing:2px; color:#d95f2b; text-transform:uppercase;">Uploading...</span>
+        <span id="gprog-count" style="font-family:Oswald,sans-serif; font-size:13px; color:rgba(255,255,255,0.4);">0 / 0</span>
       </div>
-      <div style="background:rgba(255,255,255,0.08); height:6px; clip-path:polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);">
-        <div id="progress-bar" style="background:#d95f2b; height:6px; width:0%; transition:width 0.3s;"></div>
+      <div style="background:rgba(255,255,255,0.08); height:5px;">
+        <div id="gprog-bar" style="background:#d95f2b; height:5px; width:0%; transition:width 0.3s;"></div>
       </div>
     </div>
 
     <!-- Grid -->
-    <div id="photo-grid" style="columns:3; gap:10px; column-gap:10px;"></div>
-
-    <!-- Empty state -->
-    <div id="empty-state" style="text-align:center; padding:40px 0; color:rgba(255,255,255,0.2); font-family:'Oswald',sans-serif; letter-spacing:2px; font-size:14px;">
-      No photos uploaded yet — add your first cut above ↑
-    </div>
+    <div id="pgrid" style="columns:3; gap:10px; column-gap:10px; min-height:60px;"></div>
+    <div id="pempty" style="text-align:center; padding:48px 0; color:rgba(255,255,255,0.2); font-family:Oswald,sans-serif; letter-spacing:2px; font-size:13px;">No photos yet — click ADD PHOTOS above</div>
   </div>
 </div>
 
-<script>
-const CLOUD = 'dfudvxmr3';
-const PRESET = 'barbershop_gallery';
-let uploaded = 0, total = 0;
-
-// AUTO-LOAD from Cloudinary on page open
-window.addEventListener('DOMContentLoaded', () => {
-  fetch(`https://res.cloudinary.com/${CLOUD}/image/list/barbershop.json`)
-    .then(r => r.json())
-    .then(data => {
-      const resources = data.resources || [];
-      if (resources.length) {
-        document.getElementById('empty-state').style.display = 'none';
-        resources.forEach(r => {
-          const url = `https://res.cloudinary.com/${CLOUD}/image/upload/${r.public_id}.${r.format}`;
-          addPhoto(url);
-        });
-      }
-    })
-    .catch(() => {}); // silent fail if no images yet
-});
-
-function toggleUpload() {
-  const z = document.getElementById('upload-zone');
-  z.style.display = z.style.display === 'none' ? 'block' : 'none';
-}
-const PRESET = 'barbershop_gallery';
-let uploaded = 0, total = 0;
-
-function handleDrop(e) {
-  e.preventDefault();
-  document.getElementById('upload-zone').style.background = 'rgba(217,95,43,0.05)';
-  uploadFiles(e.dataTransfer.files);
-}
-
-async function uploadFiles(files) {
-  if (!files.length) return;
-  total = files.length;
-  uploaded = 0;
-
-  document.getElementById('upload-progress').style.display = 'block';
-  document.getElementById('empty-state').style.display = 'none';
-  document.getElementById('progress-label').textContent = 'Uploading ' + total + ' photos...';
-
-  const CONCURRENT = 5;
-  const queue = Array.from(files);
-
-  async function runWorker() {
-    while (queue.length) {
-      const file = queue.shift();
-      await uploadOne(file);
-    }
-  }
-
-  const workers = Array.from({length: Math.min(CONCURRENT, total)}, runWorker);
-  await Promise.all(workers);
-
-  document.getElementById('progress-label').textContent = '✅ All photos uploaded!';
-  setTimeout(() => {
-    document.getElementById('upload-progress').style.display = 'none';
-    document.getElementById('upload-zone').style.display = 'none';
-  }, 2000);
-}
-
-async function uploadOne(file) {
-  const fd = new FormData();
-  fd.append('file', file);
-  fd.append('upload_preset', PRESET);
-  fd.append('folder', '1st_and_10');
-  fd.append('tags', 'barbershop');
-
-  try {
-    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`, {method:'POST', body:fd});
-    const data = await res.json();
-    if (data.secure_url) addPhoto(data.secure_url);
-  } catch(e) { console.error(e); }
-
-  uploaded++;
-  const pct = Math.round((uploaded / total) * 100);
-  document.getElementById('progress-bar').style.width = pct + '%';
-  document.getElementById('progress-count').textContent = uploaded + ' / ' + total;
-}
-
-function addPhoto(url) {
-  const grid = document.getElementById('photo-grid');
-  const thumb = url.replace('/upload/', '/upload/w_600,c_fill,q_auto,f_auto/');
-  const wrap = document.createElement('div');
-  wrap.style.cssText = 'break-inside:avoid; margin-bottom:10px; overflow:hidden; cursor:pointer; position:relative;';
-  wrap.innerHTML = `
-    <img src="${thumb}" loading="lazy" style="width:100%; display:block; transition:transform 0.3s, filter 0.3s;" onmouseover="this.style.transform='scale(1.04)'; this.style.filter='brightness(1.1)'" onmouseout="this.style.transform='scale(1)'; this.style.filter='brightness(1)'">
-    <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,0.4) 0%, transparent 50%); opacity:0; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0"></div>
-  `;
-  wrap.onclick = () => openLightbox(url);
-  grid.appendChild(wrap);
-}
-
-// Lightbox
-function openLightbox(url) {
-  const lb = document.getElementById('lightbox');
-  document.getElementById('lightbox-img').src = url;
-  lb.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox() {
-  document.getElementById('lightbox').style.display = 'none';
-  document.body.style.overflow = '';
-}
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
-</script>
-
 <!-- LIGHTBOX -->
-<div id="lightbox" onclick="closeLightbox()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:9999; align-items:center; justify-content:center; padding:20px;">
-  <img id="lightbox-img" src="" style="max-width:90vw; max-height:90vh; object-fit:contain; box-shadow:0 0 60px rgba(0,0,0,0.8);">
-  <button onclick="closeLightbox()" style="position:absolute; top:20px; right:24px; background:transparent; border:none; color:white; font-size:32px; cursor:pointer; font-family:sans-serif; line-height:1;">✕</button>
+<div id="plightbox" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.93); z-index:9999; align-items:center; justify-content:center; padding:20px;">
+  <img id="plightbox-img" src="" style="max-width:90vw; max-height:90vh; object-fit:contain;">
+  <button id="plightbox-close" style="position:absolute; top:18px; right:22px; background:none; border:none; color:#fff; font-size:36px; cursor:pointer; line-height:1;">×</button>
 </div>
 
+<script>
+(function() {
+  var CLOUD = 'dfudvxmr3';
+  var PRESET = 'barbershop_gallery';
+  var done = 0, tot = 0;
+
+  var input = document.getElementById('gfile');
+  var grid  = document.getElementById('pgrid');
+  var empty = document.getElementById('pempty');
+  var pwrap = document.getElementById('gprog-wrap');
+  var pbar  = document.getElementById('gprog-bar');
+  var plabel= document.getElementById('gprog-label');
+  var pcount= document.getElementById('gprog-count');
+  var lb    = document.getElementById('plightbox');
+  var lbimg = document.getElementById('plightbox-img');
+
+  document.getElementById('plightbox-close').onclick = function(){ lb.style.display='none'; document.body.style.overflow=''; };
+  lb.onclick = function(e){ if(e.target===lb){ lb.style.display='none'; document.body.style.overflow=''; } };
+
+  // Auto-load on open
+  fetch('https://res.cloudinary.com/'+CLOUD+'/image/list/barbershop.json')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var res = data.resources || [];
+      if(res.length){ empty.style.display='none'; }
+      res.forEach(function(r){
+        addPhoto('https://res.cloudinary.com/'+CLOUD+'/image/upload/'+r.public_id+'.'+r.format);
+      });
+    }).catch(function(){});
+
+  // File input change
+  input.addEventListener('change', function(){
+    if(!input.files.length) return;
+    startUpload(input.files);
+  });
+
+  function startUpload(files){
+    tot = files.length;
+    done = 0;
+    empty.style.display = 'none';
+    pwrap.style.display = 'block';
+    plabel.textContent = 'Uploading ' + tot + ' photos...';
+    pbar.style.width = '0%';
+    pcount.textContent = '0 / ' + tot;
+
+    var arr = Array.from(files);
+    var active = 0;
+    var idx = 0;
+
+    function next(){
+      if(idx >= arr.length) return;
+      var file = arr[idx++];
+      active++;
+      uploadOne(file, function(){
+        active--;
+        done++;
+        var pct = Math.round(done/tot*100);
+        pbar.style.width = pct+'%';
+        pcount.textContent = done+' / '+tot;
+        if(done===tot){ plabel.textContent='✅ Done! '+tot+' photos uploaded.'; setTimeout(function(){ pwrap.style.display='none'; },2500); }
+        next();
+      });
+      if(active < 5) next();
+    }
+    next();
+  }
+
+  function uploadOne(file, cb){
+    var fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', PRESET);
+    fd.append('folder', '1st_and_10');
+    fd.append('tags', 'barbershop');
+    fetch('https://api.cloudinary.com/v1_1/'+CLOUD+'/image/upload', {method:'POST', body:fd})
+      .then(function(r){ return r.json(); })
+      .then(function(d){ if(d.secure_url) addPhoto(d.secure_url); cb(); })
+      .catch(function(){ cb(); });
+  }
+
+  function addPhoto(url){
+    var thumb = url.replace('/upload/','/upload/w_600,c_fill,q_auto,f_auto/');
+    var d = document.createElement('div');
+    d.style.cssText = 'break-inside:avoid; margin-bottom:10px; overflow:hidden; cursor:pointer;';
+    d.innerHTML = '<img src="'+thumb+'" loading="lazy" style="width:100%; display:block; transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">';
+    d.onclick = function(){ lbimg.src=url; lb.style.display='flex'; document.body.style.overflow='hidden'; };
+    grid.appendChild(d);
+  }
+})();
+</script>
+
 <style>
-@media (max-width: 700px) {
-  #photo-grid { columns: 2 !important; }
-}
+@media (max-width:700px){ #pgrid{ columns:2 !important; } }
 </style>
+
+
 
 <!-- DIVIDER -->
 <div class="yard-divider"><span>THE TEAM BEHIND THE CUTS</span></div>
