@@ -499,7 +499,7 @@
       return r.json();
     })
     .then(function(data){
-      var res = data.resources || [];
+      var res = (data.resources || []).slice(0, 8);
       if(res.length){ empty.style.display='none'; }
       res.forEach(function(r){
         addPhoto('https://res.cloudinary.com/'+CLOUD+'/image/upload/'+r.public_id+'.'+r.format);
