@@ -511,14 +511,17 @@
 
   // Auto-load on open
   fetch('https://res.cloudinary.com/'+CLOUD+'/image/list/barbershop.json')
-    .then(function(r){ return r.json(); })
+    .then(function(r){
+      if(!r.ok) throw new Error('List endpoint returned '+r.status+'. Enable "Resource list" in Cloudinary Settings > Security.');
+      return r.json();
+    })
     .then(function(data){
       var res = data.resources || [];
       if(res.length){ empty.style.display='none'; }
       res.forEach(function(r){
         addPhoto('https://res.cloudinary.com/'+CLOUD+'/image/upload/'+r.public_id+'.'+r.format);
       });
-    }).catch(function(){});
+    }).catch(function(err){ console.warn('[Gallery]', err && err.message || err); });
 
   // File input change
   input.addEventListener('change', function(){
