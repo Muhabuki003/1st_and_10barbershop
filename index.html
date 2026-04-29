@@ -576,7 +576,13 @@
     var thumb = url.replace('/upload/','/upload/w_600,c_fill,q_auto,f_auto/');
     var d = document.createElement('div');
     d.style.cssText = 'break-inside:avoid; margin-bottom:10px; overflow:hidden; cursor:pointer;';
-    d.innerHTML = '<img src="'+thumb+'" loading="lazy" style="width:100%; display:block; transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">';
+    var img = document.createElement('img');
+    img.src = thumb;
+    img.loading = 'lazy';
+    img.style.cssText = 'width:100%; display:block; transition:transform 0.3s;';
+    img.onmouseover = function(){ this.style.transform = 'scale(1.05)'; };
+    img.onmouseout  = function(){ this.style.transform = 'scale(1)'; };
+    d.appendChild(img);
     d.onclick = function(){ lbimg.src=url; lb.style.display='flex'; document.body.style.overflow='hidden'; };
     grid.appendChild(d);
   }
